@@ -1,10 +1,10 @@
 FROM centos:latest
 MAINTAINER “Narahari” <p_narahari@yahoo.com>
 LABEL description="A basic CentOS Container with php and nginx"
-ARG SSH_KEY1
+# ARG SSH_KEY1
 # ARG SSH_KEY2
 ENV container docker
-ENV SSH_KEY1=$SSH_KEY1
+# ENV SSH_KEY1=$SSH_KEY1
 # ENV SSH_KEY2=$SSH_KEY2
 RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* ; \
         sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-* ; \
@@ -14,7 +14,7 @@ RUN useradd -u3000 student; echo student:student123 | chpasswd; \
         mkdir -m 700 -p /home/student/.ssh; chown student:student /home/student/.ssh; \
         useradd -u3456 hari; echo hari:hari123 | chpasswd; \
         mkdir -m 700 -p /home/hari/.ssh; chown hari:hari /home/hari/.ssh
-RUN echo "$SSH_KEY1" > /home/hari/.ssh/authorized_keys; chown hari:hari /home/hari/.ssh/authorized_keys
+# RUN echo "$SSH_KEY1" > /home/hari/.ssh/authorized_keys; chown hari:hari /home/hari/.ssh/authorized_keys
 RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
         rm -f /lib/systemd/system/multi-user.target.wants/*; \
         rm -f /etc/systemd/system/*.wants/*; \
